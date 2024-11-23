@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/services/authentication-service/authentication-service.iml" filepath="$PROJECT_DIR$/services/authentication-service/authentication-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/chat-service/chat-service.iml" filepath="$PROJECT_DIR$/services/chat-service/chat-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/discovery-service/discovery-service.iml" filepath="$PROJECT_DIR$/services/discovery-service/discovery-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/email-notif-service/email-notif-service.iml" filepath="$PROJECT_DIR$/services/email-notif-service/email-notif-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/gateway-service/getway-service.iml" filepath="$PROJECT_DIR$/services/gateway-service/getway-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/microservice-chat-application.iml" filepath="$PROJECT_DIR$/microservice-chat-application.iml" />
+    </modules>
+  </component>
+</project>

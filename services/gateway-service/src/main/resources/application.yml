@@ -1,0 +1,54 @@
+spring:
+  main:
+    allow-circular-references: true
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: chat-service
+          uri: lb:http://CHATING-SERVICE
+          predicates:
+            - Path=/chat/**
+          filters:
+            - AuthenticationFilter
+
+        - id: chat-service-websocket
+          uri: lb:http://CHAT-SERVICE
+          predicates:
+            - Path=/websocket/**
+#          filters:
+#            - AuthenticationFilter
+
+        - id: authentication-service
+          uri: lb:http://AUTHENTICATION-SERVICE
+          predicates:
+            - Path=/auth/**
+          filters:
+            - AuthenticationFilter
+
+        - id: email-notif-service
+          uri: lb:http://EMAIL-NOTIF-SERVICE
+          predicates:
+            - Path=/email/**
+          filters:
+            - AuthenticationFilter
+
+
+  application:
+    name: gateway-service
+
+
+server:
+  port: 8222
+
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+
