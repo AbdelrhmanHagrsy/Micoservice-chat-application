@@ -1,8 +1,9 @@
-package com.abdelrhman.chatservice.config;
+package com.abdelrhman.chatservice.config.websoket;
 
+import com.abdelrhman.chatservice.dto.InstanceName;
+import com.abdelrhman.chatservice.service.RedisService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.stereotype.Component;
@@ -14,11 +15,17 @@ import java.util.Map;
 @Component
 @Slf4j
 public class WebsocketInterceptore implements HandshakeInterceptor {
-    public static int state = 0;
+
+
+
+
+
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
 
-        String currentUserEmail = request.getHeaders().getFirst("X-User-Email");
+        // String currentUserEmail = request.getHeaders().getFirst("X-User-Email");
+        String currentUserEmail = "omar@gmail.com";
+
         if(currentUserEmail == null) {
             log.error("Current user email not found in request header!");
             return false;
@@ -32,6 +39,5 @@ public class WebsocketInterceptore implements HandshakeInterceptor {
 
     @Override
     public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception exception) {
-
     }
 }

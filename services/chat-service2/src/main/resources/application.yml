@@ -1,8 +1,6 @@
 spring:
   application:
-    name: chat-service
-    instance:
-      id: instanceOne
+    name: chat-service2
   data:
     mongodb:
       host: localhost
@@ -14,13 +12,10 @@ spring:
 
 
 server:
-  port: 9097
+  port: 9070
 
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
-
-getway:
-  url: http://localhost:8222

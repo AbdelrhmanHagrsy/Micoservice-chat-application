@@ -1,4 +1,4 @@
-package com.abdelrhman.chatservice.config;
+package com.abdelrhman.chatservice.config.websoket;
 
 import java.security.Principal;
 

@@ -17,7 +17,7 @@
     <bytecodeTargetLevel>
       <module name="authentication-service" target="17" />
       <module name="chat-service" target="17" />
-      <module name="chat-service2" target="1.5" />
+      <module name="chat-service2" target="17" />
       <module name="chating-service" target="17" />
       <module name="discovery-service" target="17" />
       <module name="email-notif-service" target="17" />
@@ -29,7 +29,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="authentication-service" options="-parameters" />
       <module name="chat-service" options="-parameters" />
-      <module name="chat-service2" options="" />
+      <module name="chat-service2" options="-parameters" />
       <module name="chating-service" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
       <module name="email-notif-service" options="-parameters" />

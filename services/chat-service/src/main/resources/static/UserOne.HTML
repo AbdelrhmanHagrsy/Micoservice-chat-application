@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script>
+        let stompClient = null;
+
+function connect() {
+    console.log('Attempting to connect to WebSocket...');
+
+    const socket = new SockJS('http://localhost:9098/websocket', null, {
+        headers: {
+            'X-User-Email': 'adelameen@gmail.com'  // User's email passed in header
+        }
+    });
+
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function (frame) {
+        console.log('Connected successfully. Server frame:', frame);
+
+        // Subscribe to a user-specific topic
+        const topic = '/user/' + 'adelameen@gmail.com' + '/privateTopic/messages';
+        console.log('Subscribing to topic:', topic);
+        stompClient.subscribe(topic, function (message) {
+            console.log('Message received on topic:', topic, 'Message body:', message.body);
+            showMessage(message.body);
+        });
+    }, function (error) {
+        console.error('Error connecting to WebSocket:', error);
+    });
+}
+
+
+        function sendMessage() {
+    const messageContent = document.getElementById('messageInput').value;
+
+    if (!stompClient || !stompClient.connected) {
+        console.error('Cannot send message. WebSocket connection is not established.');
+        return;
+    }
+
+    // Construct the DTO as a JSON object
+    const messageDto = {
+        sender: "adelameen@gmail.com", // Replace with dynamic data if needed
+        recipients: ["omar@gmail.com"], // Replace with dynamic recipient data if needed
+        sendTime: new Date().toISOString(), // Set the current time in ISO format
+        groupId: "group1", // Replace with dynamic groupId if applicable
+        messageContent: messageContent
+    };
+
+    console.log('Sending message DTO to /app/sendPublicMessage:', messageDto);
+
+    // Send the JSON stringified message
+    stompClient.send('/app/sendPublicMessage', {}, JSON.stringify(messageDto));
+
+    document.getElementById('messageInput').value = '';
+    }
+
+        function showMessage(message) {
+            console.log('Displaying message:', message);
+
+            const messagesDiv = document.getElementById('messages');
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            messagesDiv.appendChild(messageElement);
+        }
+
+        window.addEventListener('load', () => {
+            connect();
+        });
+    </script>
+</head>
+<body>
+    <h1>WebSocket Test</h1>
+    <div>
+        <input type="text" id="messageInput" placeholder="Enter your message here">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <h2>Messages:</h2>
+    <div id="messages" style="border: 1px solid #ccc; padding: 10px; max-height: 300px; overflow-y: auto;"></div>
+</body>
+</html>
