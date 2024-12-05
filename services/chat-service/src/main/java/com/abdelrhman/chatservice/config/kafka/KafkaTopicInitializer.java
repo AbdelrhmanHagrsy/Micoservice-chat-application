@@ -26,6 +26,8 @@ public class KafkaTopicInitializer implements ApplicationListener<ContextRefresh
 
     private void createTopicIfNotExists() {
 
+        // you can use this code if u want to create a new kafka topic
+        /*
         Properties properties = new Properties();
         properties.put("bootstrap.servers", BOOTSTRAP_SERVERS_URL);
 
@@ -45,5 +47,6 @@ public class KafkaTopicInitializer implements ApplicationListener<ContextRefresh
                 throw new RuntimeException("Error creating topic", e);
             }
         }
+         */
     }
 }
