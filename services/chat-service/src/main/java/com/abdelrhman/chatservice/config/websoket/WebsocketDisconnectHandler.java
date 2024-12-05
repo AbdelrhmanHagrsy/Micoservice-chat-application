@@ -1,12 +1,8 @@
 package com.abdelrhman.chatservice.config.websoket;
 
 import com.abdelrhman.chatservice.service.RedisService;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-//import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
@@ -14,14 +10,14 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 public class WebsocketDisconnectHandler implements ApplicationListener<SessionDisconnectEvent> {
 
     @Autowired
-    private RedisTemplate<String,String> redisTemplate;
+    private RedisService redisService;
 
     @Override
     public void onApplicationEvent(SessionDisconnectEvent event) {
+        // when user websocket connection get closed delete session info from redis
         StompPrincipal userId = event.getMessage().getHeaders().get("simpUser", StompPrincipal.class);
         if(userId != null){
-            System.out.println("session deleted from redis for user :"+ userId);
-            redisTemplate.opsForHash().delete("user-session",userId.getName());
+            redisService.deleteUserSession(userId.getName());
         }
     }
 }

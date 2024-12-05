@@ -3,21 +3,14 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/services/discovery-service/pom.xml" />
-        <option value="$PROJECT_DIR$/getway-service/pom.xml" />
-        <option value="$PROJECT_DIR$/authentication-service/pom.xml" />
-        <option value="$PROJECT_DIR$/services/getway-service/pom.xml" />
-        <option value="$PROJECT_DIR$/services/gateway-service/pom.xml" />
+        <option value="$PROJECT_DIR$/services/chat-service/pom.xml" />
+        <option value="$PROJECT_DIR$/services/gatewway-service2/pom.xml" />
+        <option value="$PROJECT_DIR$/services/gatewway-service/pom.xml" />
         <option value="$PROJECT_DIR$/services/authentication-service/pom.xml" />
         <option value="$PROJECT_DIR$/services/email-notif-service/pom.xml" />
-        <option value="$PROJECT_DIR$/chat-service/pom.xml" />
-        <option value="$PROJECT_DIR$/chat-service2/pom.xml" />
-        <option value="$PROJECT_DIR$/chating-service/pom.xml" />
-        <option value="$PROJECT_DIR$/services/chat-service/pom.xml" />
+        <option value="$PROJECT_DIR$/services/discovery-service/pom.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/out" />
-  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK" />
 </project>

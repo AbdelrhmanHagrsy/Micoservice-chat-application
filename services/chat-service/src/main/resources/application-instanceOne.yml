@@ -2,7 +2,7 @@ spring:
   application:
     name: chat-service
     instance:
-      id: instance-one # each new instance should have a unique id because it's related to specific kafka topic partition
+      id: instance-one   # each new instance should have a unique id because it's related to specific kafka topic partition
   data:
     mongodb:
       host: localhost

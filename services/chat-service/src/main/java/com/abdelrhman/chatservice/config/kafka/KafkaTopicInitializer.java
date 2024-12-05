@@ -25,22 +25,18 @@ public class KafkaTopicInitializer implements ApplicationListener<ContextRefresh
     }
 
     private void createTopicIfNotExists() {
-        /*
+
         Properties properties = new Properties();
         properties.put("bootstrap.servers", BOOTSTRAP_SERVERS_URL);
 
-        // create order created topic  in kafka if they are not already exist
+        // create a new topic for each chat-service you will run
         try (AdminClient adminClient = AdminClient.create(properties)) {
-            NewTopic instanceOneTopic = TopicBuilder.name("instance-forward-instanceOne")
-                    .partitions(1)
-                    .replicas(1)
-                    .build();
-            NewTopic instanceTwoTopic = TopicBuilder.name("instance-forward-instanceTwo")
-                    .partitions(1)
+            NewTopic messageTopic = TopicBuilder.name(MESSAGE_TOPIC_NAME)  // create topic and partition number is equal two instance number
+                    .partitions(2)
                     .replicas(1)
                     .build();
 
-            adminClient.createTopics(Arrays.asList(instanceOneTopic,instanceTwoTopic)).all().get();
+            adminClient.createTopics(Arrays.asList(messageTopic)).all().get();
             System.out.println("Topics created successfully.");
         } catch (Exception e) {
             if (e.getCause() instanceof TopicExistsException) {
@@ -48,6 +44,6 @@ public class KafkaTopicInitializer implements ApplicationListener<ContextRefresh
             } else {
                 throw new RuntimeException("Error creating topic", e);
             }
-        }*/
+        }
     }
 }

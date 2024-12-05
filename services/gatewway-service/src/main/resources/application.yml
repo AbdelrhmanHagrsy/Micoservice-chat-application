@@ -19,7 +19,7 @@ spring:
           predicates:
             - Path=/websocket/**
 #          filters:
-#            - AuthenticationFilter
+#            - AuthenticationFilter # you can make websocket connection secure by using this filter
 
         - id: authentication-service
           uri: lb:http://AUTHENTICATION-SERVICE

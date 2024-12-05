@@ -8,20 +8,18 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="getway-service" />
+        <module name="chat-service" />
         <module name="authentication-service" />
         <module name="email-notif-service" />
-        <module name="chat-service" />
         <module name="discovery-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="authentication-service" target="17" />
       <module name="chat-service" target="17" />
-      <module name="chat-service2" target="17" />
-      <module name="chating-service" target="17" />
       <module name="discovery-service" target="17" />
       <module name="email-notif-service" target="17" />
-      <module name="gateway-service" target="17" />
+      <module name="gatewway-service" target="1.6" />
       <module name="getway-service" target="17" />
     </bytecodeTargetLevel>
   </component>
@@ -29,11 +27,9 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="authentication-service" options="-parameters" />
       <module name="chat-service" options="-parameters" />
-      <module name="chat-service2" options="-parameters" />
-      <module name="chating-service" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
       <module name="email-notif-service" options="-parameters" />
-      <module name="gateway-service" options="-parameters" />
+      <module name="gatewway-service" options="-parameters" />
       <module name="getway-service" options="-parameters" />
     </option>
   </component>

@@ -1,11 +1,8 @@
 package com.abdelrahaman.authenticationservice.config;
 
-import com.abdelrahaman.authenticationservice.client.UserClientFeign;
-import com.abdelrahaman.authenticationservice.dto.UserAuthDto;
 import com.abdelrahaman.authenticationservice.entity.User;
 import com.abdelrahaman.authenticationservice.exception.UserNotActive;
 import com.abdelrahaman.authenticationservice.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

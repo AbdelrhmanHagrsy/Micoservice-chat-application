@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
@@ -23,8 +24,14 @@ public class WebsocketInterceptore implements HandshakeInterceptor {
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
 
-        // String currentUserEmail = request.getHeaders().getFirst("X-User-Email");
-        String currentUserEmail = "omar@gmail.com";
+        // extract user email from websocket connection request
+        ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
+        String currentUserEmail = servletRequest.getServletRequest().getParameter("userEmail");
+
+        if (currentUserEmail == null || currentUserEmail.isEmpty()) {
+            log.error("User email is missing in WebSocket handshake query parameters!");
+            return false;
+        }
 
         if(currentUserEmail == null) {
             log.error("Current user email not found in request header!");

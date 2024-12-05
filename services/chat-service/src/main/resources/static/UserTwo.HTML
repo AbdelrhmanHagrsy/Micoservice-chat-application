@@ -1,86 +1,157 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>WebSocket Test</title>
+    <title>WebSocket Chat</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .chat-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .message-input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #messageInput {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #messages {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            background: #f9f9f9;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            background-color: #e1f5fe;
+            color: #0277bd;
+            word-wrap: break-word;
+        }
+    </style>
     <script>
         let stompClient = null;
 
-function connect() {
-    console.log('Attempting to connect to WebSocket...');
+        function connect() {
+            console.log('Attempting to connect to WebSocket...');
 
-    const socket = new SockJS('http://localhost:9097/websocket', null, {
-        headers: {
-            'X-User-Email': 'omar@gmail.com'  // User's email passed in header
+            const userEmail = encodeURIComponent('adel@gmail.com'); // User's email encoded for query parameter
+            const socket = new SockJS(`http://localhost:8222/websocket?userEmail=${userEmail}`); // Include email in the query
+
+            stompClient = Stomp.over(socket);
+
+            stompClient.connect({}, function (frame) {
+                console.log('Connected successfully. Server frame:', frame);
+
+                // Subscribe to a user-specific topic
+                const topic = `/user/adel@gmail.com/privateTopic/messages`;
+                console.log('Subscribing to topic:', topic);
+
+                stompClient.subscribe(topic, function (message) {
+                    console.log('Message received on topic:', topic, 'Message body:', message.body);
+                    showMessage(message.body);
+                });
+            }, function (error) {
+                console.error('Error connecting to WebSocket:', error);
+            });
         }
-    });
-
-    stompClient = Stomp.over(socket);
-
-    stompClient.connect({}, function (frame) {
-        console.log('Connected successfully. Server frame:', frame);
-
-        // Subscribe to a user-specific topic
-        const topic = '/user/' + 'omar@gmail.com' + '/privateTopic/messages';
-        console.log('Subscribing to topic:', topic);
-        stompClient.subscribe(topic, function (message) {
-            console.log('Message received on topic:', topic, 'Message body:', message.body);
-            showMessage(message.body);
-        });
-    }, function (error) {
-        console.error('Error connecting to WebSocket:', error);
-    });
-}
-
 
         function sendMessage() {
-    const messageContent = document.getElementById('messageInput').value;
+            const messageContent = document.getElementById('messageInput').value;
 
-    if (!stompClient || !stompClient.connected) {
-        console.error('Cannot send message. WebSocket connection is not established.');
-        return;
-    }
+            if (!stompClient || !stompClient.connected) {
+                console.error('Cannot send message. WebSocket connection is not established.');
+                return;
+            }
 
-    // Construct the DTO as a JSON object
-    const messageDto = {
-        sender: "omar@gmail.com", // Replace with dynamic data if needed
-        recipients: ["adelameen@gmail.com"], // Replace with dynamic recipient data if needed
-        sendTime: new Date().toISOString(), // Set the current time in ISO format
-        groupId: "group1", // Replace with dynamic groupId if applicable
-        messageContent: messageContent
-    };
+            // Construct the DTO as a JSON object
+            const messageDto = {
+                sender: "adel@gmail.com", // Sender's email
+                recipients: ["abdelrhman@gmail.com"], // Replace with dynamic recipient data if needed
+                sendTime: new Date().toISOString(), // Set the current time in ISO format
+                groupId: "group1", // Replace with dynamic groupId if applicable
+                messageContent: messageContent
+            };
 
-    console.log('Sending message DTO to /app/sendPublicMessage:', messageDto);
+            console.log('Sending message DTO to /app/sendPublicMessage:', messageDto);
 
-    // Send the JSON stringified message
-    stompClient.send('/app/sendPublicMessage', {}, JSON.stringify(messageDto));
+            // Send the JSON stringified message
+            stompClient.send('/app/sendPublicMessage', {}, JSON.stringify(messageDto));
 
-    document.getElementById('messageInput').value = '';
-    }
-
+            document.getElementById('messageInput').value = ''; // Clear input field
+        }
 
         function showMessage(message) {
             console.log('Displaying message:', message);
 
             const messagesDiv = document.getElementById('messages');
             const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
             messageElement.textContent = message;
             messagesDiv.appendChild(messageElement);
         }
 
+        // Automatically connect on page load
         window.addEventListener('load', () => {
             connect();
         });
     </script>
 </head>
 <body>
-    <h1>WebSocket Test</h1>
-    <div>
+<div class="chat-container">
+    <h1>WebSocket Chat</h1>
+    <div class="message-input-container">
         <input type="text" id="messageInput" placeholder="Enter your message here">
         <button onclick="sendMessage()">Send</button>
     </div>
     <h2>Messages:</h2>
-    <div id="messages" style="border: 1px solid #ccc; padding: 10px; max-height: 300px; overflow-y: auto;"></div>
+    <div id="messages"></div>
+</div>
 </body>
 </html>

@@ -19,6 +19,7 @@ public class WebsocketConnectHandler implements ApplicationListener<SessionConne
 
     @Override
     public void onApplicationEvent(SessionConnectedEvent event) {
+        // add session info in redis when user create a new websocket connection
         StompPrincipal userId = event.getMessage().getHeaders().get("simpUser", StompPrincipal.class);
         if(userId != null){
             System.out.println("session deleted from redis for user :"+ userId);
